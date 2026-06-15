@@ -229,6 +229,42 @@ export default function App() {
 
   // Toast alert status
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [editMode, setEditMode] = useState(false);
+
+  // Track keyboard sequence for 00000000
+  useEffect(() => {
+    let zeroCount = 0;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Capture 0 key pressed
+      if (e.key === "0") {
+        zeroCount += 1;
+        if (zeroCount === 8) {
+          if (document.designMode === "on") {
+            document.designMode = "off";
+            setEditMode(false);
+            setToastMessage("🔒 全網編輯模式已關閉！內容已鎖定。");
+            setTimeout(() => {
+              setToastMessage((prev) => (prev === "🔒 全網編輯模式已關閉！內容已鎖定。" ? null : prev));
+            }, 3000);
+          } else {
+            document.designMode = "on";
+            setEditMode(true);
+            setToastMessage("✏️ 全網編輯功能已開啟！可以直接點擊修改網頁所有文字。");
+            setTimeout(() => {
+              setToastMessage((prev) => (prev === "✏️ 全網編輯功能已開啟！可以直接點擊修改網頁所有文字。" ? null : prev));
+            }, 5000);
+          }
+          zeroCount = 0;
+        }
+      } else if (e.key !== "Shift" && e.key !== "Control" && e.key !== "Alt" && e.key !== "Meta" && e.key !== "CapsLock") {
+        zeroCount = 0;
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown, true);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown, true);
+    };
+  }, []);
 
   // Sync scroll for chat container
   useEffect(() => {
@@ -366,6 +402,30 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Universal Website Editor Active Bar */}
+      {editMode && (
+        <div id="universal_editor_bar" className="bg-amber-500 text-slate-950 px-6 py-2.5 text-xs font-bold flex items-center justify-between gap-4 border-b border-amber-600/30 sticky top-0 z-50 shadow-md">
+          <div className="flex items-center gap-2">
+            <span className="bg-amber-950 text-amber-300 text-[10px] px-1.5 py-0.5 rounded uppercase font-mono tracking-wider animate-pulse">EDIT MODE</span>
+            <span>✏️ <strong>全網編輯模式已啟用！</strong>您現已可以直接在網頁上點選並修改任意文字。再次輸入 <code className="bg-amber-600/30 px-1 py-0.5 rounded font-mono font-extrabold">00000000</code> 可關閉。</span>
+          </div>
+          <button
+            id="btn_lock_edits"
+            onClick={() => {
+              document.designMode = "off";
+              setEditMode(false);
+              setToastMessage("🔒 全網編輯模式已關閉！文字已定稿。");
+              setTimeout(() => {
+                setToastMessage((prev) => (prev === "🔒 全網編輯模式已關閉！文字已定稿。" ? null : prev));
+              }, 3000);
+            }}
+            className="bg-slate-910 hover:bg-slate-800 text-amber-50 px-3 py-1 rounded text-[10px] uppercase font-bold tracking-wider transition-all bg-slate-900 shadow"
+          >
+            保存並鎖定文字
+          </button>
+        </div>
+      )}
 
       {/* Top Main Navigation Header */}
       <header id="app_header" className="bg-white border-b border-slate-200 sticky top-0 z-40 px-6 py-4 shadow-sm">
