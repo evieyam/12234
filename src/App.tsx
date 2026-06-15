@@ -430,7 +430,7 @@ export default function App() {
               <button
                 onClick={() => {
                   setActiveTab("product");
-                  showToast("🔥 歡迎探索特推產品：宏利宏瑞終身年金計劃！");
+                  showToast("🔥 歡迎探索：終身即期年金方案解析！");
                 }}
                 className={`flex-1 sm:flex-none px-3.5 py-2 text-xs font-bold rounded-lg transition-all duration-200 flex items-center justify-center gap-1.5 relative overflow-hidden ${
                   activeTab === "product" 
@@ -439,7 +439,7 @@ export default function App() {
                 }`}
               >
                 <Sparkles className="h-3.5 w-3.5 text-amber-500 animate-pulse" />
-                <span>宏瑞終身年金</span>
+                <span>終身延續年金</span>
                 <span className="absolute -top-[1px] -right-[1px] bg-red-500 text-white rounded-full text-[8.5px] w-3 h-3 flex items-center justify-center font-extrabold scale-75 animate-bounce">
                   薦
                 </span>
@@ -1032,7 +1032,7 @@ export default function App() {
                         href={`https://wa.me/85262557627?text=你好，我剛剛在「錢家保險智囊」計算了保障缺口（家庭每月必要開支: HK$${calculatorInput.monthlyExpenses}，受養人: ${calculatorInput.dependents}人，現有人壽保額: HK$${calculatorInput.currentLifeCoverage}），希望能進一步與您一對一分析，諮詢更詳細的精明配置方案。`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-850 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 shrink-0 transition-all duration-200 shadow-md shadow-emerald-650/10 text-center justify-center w-full md:w-auto"
+                        className="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-850 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 shrink-0 transition-all duration-200 shadow-md shadow-emerald-500/10 text-center justify-center w-full md:w-auto"
                       >
                         <Phone className="h-4 w-4 text-emerald-100 animate-pulse" />
                         <span>WhatsApp 諮詢 (6255 7627)</span>
@@ -1089,7 +1089,7 @@ export default function App() {
                   </div>
 
                   {/* General reminder box */}
-                  <div className="p-3.5 bg-yellow-50 rounded-xl text-yellow-900 border border-yellow-100 text-xs font-light">
+                  <div className="p-3.5 bg-yellow-50 rounded-xl text-yellow-905 border border-yellow-100 text-xs font-light text-left">
                     ⚠️ <strong>中立免責聲明：</strong> 錢家保險智囊為香港財務教育普及工具。AI 保險專家旨在解讀大眾保單條約與投保避坑指南，絕不向您推薦或代銷特定商業實體之保單產品。
                   </div>
                 </div>
@@ -1113,7 +1113,7 @@ export default function App() {
                         </span>
                       </h4>
                       <p className="text-[10px] text-slate-400 font-mono">
-                        Active Agent Core: @google/genai & gemini-3.5-flash
+                        Active Agent Core: @google/genai & gemini-2.5-flash
                       </p>
                     </div>
                   </div>
@@ -1224,7 +1224,7 @@ export default function App() {
             </motion.div>
           )}
 
-          {/* TAB 4: Premium Product Showcase - 宏瑞終身即期年金保險計劃 */}
+          {/* TAB 4: Premium Product Showcase - 終身即期年金方案解析 */}
           {activeTab === "product" && (
             <motion.div
               key="product_tab"
@@ -1241,22 +1241,22 @@ export default function App() {
                 
                 <div className="relative z-10 space-y-4 max-w-4xl">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="bg-red-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full animate-pulse">
-                      HOT 熱銷理財特推
+                    <span className="bg-amber-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full">
+                      精選理財方案剖析
                     </span>
                     <span className="bg-emerald-900/60 text-emerald-100 text-[10px] font-bold tracking-wider px-2.5 py-0.5 rounded-full border border-emerald-500/30">
-                      宏利人壽承保
+                      市場主流年金對標
                     </span>
                   </div>
                   
                   <h2 className="font-sans font-extrabold text-2xl sm:text-4xl text-white tracking-tight leading-tight">
-                    宏瑞終身即期年金保險計劃 <br className="hidden sm:inline" />
-                    <span className="text-emerald-300">GoldenStart Whole Life Immediate Annuity</span>
+                    終身即期年金特選配置方案 <br className="hidden sm:inline" />
+                    <span className="text-emerald-300">Whole Life Immediate Annuity configuration Analysis</span>
                   </h2>
                   
                   <p className="text-sm sm:text-base text-emerald-100 font-light max-w-2xl leading-relaxed">
-                    預期壽命越長，您的退休生活亦越長。隨著時間流逝，您的儲蓄或會逐漸減少，但健康需要卻會與日俱增！
-                    <strong>「宏瑞終身年金」</strong>是您的退休護航明智之選！只要整付保費，二話不說，<strong>由第 1 個保單月結日起</strong>在受保人在世時終身支付保證每月入息。
+                    預期壽命越長，您的退休生活亦越長。隨著時間流逝，您的儲蓄或會逐漸減少，但健康與生活開支卻會與日俱增！
+                    這類<strong>「即期終身年金」</strong>是退休長壽護航的精明配置選擇：只要整付保費一次性開戶，<strong>由第 1 個保單月結日起</strong>便可在受保人在世時，終身享用保證每月入息。
                   </p>
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
@@ -1266,15 +1266,15 @@ export default function App() {
                     </div>
                     <div className="bg-emerald-950/40 p-3 rounded-xl border border-emerald-500/20">
                       <div className="text-2xl font-black text-amber-300">終身派</div>
-                      <div className="text-[10px] text-emerald-100 font-light">長命百歲 月月出糧</div>
+                      <div className="text-[10px] text-emerald-100 font-light">長命百歲 月月提取</div>
                     </div>
                     <div className="bg-emerald-950/50 p-3 rounded-xl border border-emerald-500/20">
                       <div className="text-2xl font-black text-amber-300">高達 263%</div>
-                      <div className="text-[10px] text-emerald-100 font-light">25年總預期回報倍增</div>
+                      <div className="text-[10px] text-emerald-100 font-light">25年總預期收益備付</div>
                     </div>
                     <div className="bg-emerald-950/50 p-3 rounded-xl border border-emerald-500/20">
-                      <div className="text-2xl font-black text-amber-300">14種重病</div>
-                      <div className="text-[10px] text-emerald-100 font-light">特設身心全護鎖終期紅利</div>
+                      <div className="text-2xl font-black text-amber-300">身心雙護</div>
+                      <div className="text-[10px] text-emerald-100 font-light">涵蓋14種嚴重疾病紅利鎖定</div>
                     </div>
                   </div>
                 </div>
@@ -1286,9 +1286,9 @@ export default function App() {
                   <span className="bg-amber-100 text-amber-805 text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full">
                     全新即時收益試算
                   </span>
-                  <h3 className="font-sans font-bold text-slate-900 text-lg sm:text-xl">「宏瑞」自動糧倉 ── 即時入息預覽</h3>
+                  <h3 className="font-sans font-bold text-slate-900 text-lg sm:text-xl">終身自動現金流 ── 即時入息預覽</h3>
                   <p className="text-xs text-slate-500 font-light">
-                    拖動滑桿自訂您的投保整付保費（一次性投入），即可預算您第1個月起每月領取的保證月薪，並比較兩大黃金配置方案！
+                    拖動滑桿自訂您的投保整付保費（一次性投入），即可預算您第1個月起每月領取的保證金額，並客觀比較兩大黃金配置方向！
                   </p>
                 </div>
 
@@ -1320,7 +1320,7 @@ export default function App() {
                     />
                     <div className="flex justify-between text-[10px] font-mono text-slate-400">
                       <span>最低 $30,000 USD</span>
-                      <span>$300,000 (戴先生首選案例金額)</span>
+                      <span>$300,000 (典型配置案例金額)</span>
                       <span>最高 $1,000,000 USD</span>
                     </div>
                   </div>
@@ -1350,7 +1350,7 @@ export default function App() {
                 {/* Side-by-Side Sub-plans Dynamic Payout Comparison */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                   
-                  {/* Option 1: 易選計劃 (Easy) */}
+                  {/* Option 1: 高入息型方案 (Easy) */}
                   <div className="bg-emerald-50/40 rounded-2xl border-2 border-emerald-500/20 p-5 flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-200 relative overflow-hidden">
                     <div className="absolute top-0 right-0 bg-emerald-600 text-white font-bold text-[9px] px-2.5 py-1 rounded-bl-xl uppercase tracking-wider">
                       高額月取入息首選
@@ -1362,8 +1362,8 @@ export default function App() {
                           <Coins className="h-4.5 w-4.5" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-slate-900 text-base">「易選」計劃 (Easy)</h4>
-                          <p className="text-[10px] text-emerald-800 font-medium">適合著重高額月領穩定年金的退休人士</p>
+                          <h4 className="font-bold text-slate-900 text-base">「高入息型」配置方案 (Easy)</h4>
+                          <p className="text-[10px] text-emerald-800 font-medium">優勢：偏重高額月領穩定年金，保障即時日常生活開支</p>
                         </div>
                       </div>
 
@@ -1385,29 +1385,29 @@ export default function App() {
                         </li>
                         <li className="flex items-start gap-1.5">
                           <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                          <span><strong>25年總預期收益</strong> (含紅利)：領回累計 <strong>146%</strong> 高回報 ─ 預期約 <strong>${Math.round(productPremium * 1.46).toLocaleString()} USD</strong></span>
+                          <span><strong>25年總預期收益</strong> (含紅利)：領回累計 <strong>146%</strong> 高回報 ── 預期約 <strong>${Math.round(productPremium * 1.46).toLocaleString()} USD</strong></span>
                         </li>
                         <li className="flex items-start gap-1.5">
                           <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                          <span><strong>與您相伴障額外賠償</strong>：確診嚴重認知障礙，每年享額外 <strong>0.5%</strong> 賠償，最長領足 10 年</span>
+                          <span><strong>失能照護額外補貼</strong>：確診嚴重認知障礙，每年享額外 <strong>0.5%</strong> 賠償，最長領足 10 年</span>
                         </li>
                       </ul>
                     </div>
 
                     <div className="pt-2 border-t border-slate-200/50">
                       <a
-                        href={`https://wa.me/85262557627?text=你好！我用過「錢家保險智囊」特推的【宏利宏瑞終身即期年金】試算器，我對【易選計劃】非常感興趣。我想諮詢整付保費 美金 $${productPremium.toLocaleString()} 元（約合 HK$${Math.round(productPremium * 7.8).toLocaleString()} 元）的具體首投折扣與入息落實，想和您一對一聯絡，謝謝！`}
+                        href={`https://wa.me/85262557627?text=你好！我用過「錢家保險智囊」的年金收益試算。我對【高入息型 (Easy)】終身即期年金對標配置方案很有興趣。我想諮詢預算美金 $${productPremium.toLocaleString()}元（約合 HK$${Math.round(productPremium * 7.8).toLocaleString()}元）的具體入息落實與退休年金配置規劃，希望能與顧問進行一對一專業諮詢，謝謝！`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all text-center"
                       >
                         <Phone className="h-3.5 w-3.5 text-emerald-100" />
-                        <span>領取 易選 方案一對一回報書 (${productPremium.toLocaleString()} USD)</span>
+                        <span>諮詢 高入息 方案一對一回報書 (${productPremium.toLocaleString()} USD)</span>
                       </a>
                     </div>
                   </div>
 
-                  {/* Option 2: 盛享計劃 (Prosperity) */}
+                  {/* Option 2: 高增值型方案 (Prosperity) */}
                   <div className="bg-teal-50/40 rounded-2xl border-2 border-teal-500/20 p-5 flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-200 relative overflow-hidden">
                     <div className="absolute top-0 right-0 bg-teal-600 text-white font-bold text-[9px] px-2.5 py-1 rounded-bl-xl uppercase tracking-wider">
                       高增值與身心多重護理
@@ -1419,8 +1419,8 @@ export default function App() {
                           <TrendingUp className="h-4.5 w-4.5" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-slate-900 text-base">「盛享」計劃 (Prosperity)</h4>
-                          <p className="text-[10px] text-teal-800 font-medium">適合追求長期資產大幅增值與極高重病津貼者</p>
+                          <h4 className="font-bold text-slate-900 text-base">「高增值型」配置方案 (Prosperity)</h4>
+                          <p className="text-[10px] text-teal-800 font-medium">優勢：追求長期資產增值與極高重病/失能津貼者首選</p>
                         </div>
                       </div>
 
@@ -1438,28 +1438,28 @@ export default function App() {
                       <ul className="space-y-2 text-xs text-slate-600">
                         <li className="flex items-start gap-1.5">
                           <CheckCircle2 className="h-3.5 w-3.5 text-teal-600 shrink-0 mt-0.5" />
-                          <span><strong>保證回本極快</strong>：預期僅需於第 11 個保單年度完結時即可快速回本</span>
+                          <span><strong>保證回本極快</strong>：預期約於第 11 個保單年度完結時即可快速回本</span>
                         </li>
                         <li className="flex items-start gap-1.5">
                           <CheckCircle2 className="h-3.5 w-3.5 text-teal-600 shrink-0 mt-0.5" />
-                          <span><strong>資產極限翻倍</strong> (含紅利)：領回累計高達 <strong>263%</strong> 的回報 ─ 預期高達 <strong>${Math.round(productPremium * 2.63).toLocaleString()} USD</strong></span>
+                          <span><strong>資產長期翻倍</strong> (含紅利)：領回累計高達 <strong>263%</strong> 的回報 ── 預期高達 <strong>${Math.round(productPremium * 2.63).toLocaleString()} USD</strong></span>
                         </li>
                         <li className="flex items-start gap-1.5">
                           <CheckCircle2 className="h-3.5 w-3.5 text-teal-600 shrink-0 mt-0.5" />
-                          <span><strong>與您相伴障高額賠償</strong>：確診嚴重認知障礙，每年享額外 <strong>3.5%</strong> 賠償，10年累取 35% 額外津貼</span>
+                          <span><strong>高額身心障礙津貼</strong>：確診指定認知障礙，每年享額外 <strong>3.5%</strong> 賠償，10年累取 35% 額外津貼</span>
                         </li>
                       </ul>
                     </div>
 
                     <div className="pt-2 border-t border-teal-500/20">
                       <a
-                        href={`https://wa.me/85262557627?text=你好！我用過「錢家保險智囊」特推的【宏利宏瑞終身即期年金】試算器，我對【盛享計劃】非常感興趣。我想諮詢整付保費 美金 $${productPremium.toLocaleString()} 元（約合 HK$${Math.round(productPremium * 7.8).toLocaleString()} 元）的終期紅利增長與理賠防護，想和您一對一落實細節，謝謝！`}
+                        href={`https://wa.me/85262557627?text=你好！我正在使用「錢家保險智囊」的年金收益試算。我對【高增值與身心護理型 (Prosperity)】終身即期年金方案非常有興趣。我想諮詢預算美金 $${productPremium.toLocaleString()}元（約合 HK$${Math.round(productPremium * 7.8).toLocaleString()}元）在重疾鎖定、認知障礙年度津貼及傳承信託方面的配置分析，希望能與專業顧問進行一對一諮詢，謝謝！`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all text-center"
                       >
                         <Phone className="h-3.5 w-3.5 text-teal-100" />
-                        <span>領取 盛享 方案一對一回報書 (${productPremium.toLocaleString()} USD)</span>
+                        <span>諮詢 高增值 方案一對一回報書 (${productPremium.toLocaleString()} USD)</span>
                       </a>
                     </div>
                   </div>
@@ -1483,8 +1483,8 @@ export default function App() {
                   </div>
 
                   <p className="text-xs text-slate-600 leading-relaxed font-light">
-                    踏入退休期，最怕健康出問題拖累家人。宏瑞終身年金特設<strong>「身心全護保障」</strong>，由第 3 個保單周年日起，
-                    如不幸確診以下 14 種指定嚴重危疾或精神疾病，可申請<strong>免退保鎖定及提取高達 50% 的終期紅利</strong>（每次可行使1次，累計最多可高達 5 次），保證資金充裕無憂治療：
+                    踏入退休期，最怕健康出問題拖累家人。此款年金精準對標方案特設<strong>「身心全護保障」</strong>，由第 3 個保單周年日起，
+                    如不幸確診以下 14 種指定嚴重危疾 or 精神疾病，可申請<strong>免退保鎖定及提取高達 50% 的終期紅利</strong>（每次可行使1次，累計最多可高達 5 次），保證資金充裕無憂治療：
                   </p>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -1510,7 +1510,7 @@ export default function App() {
                     <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                       <div className="flex items-center gap-1.5 mb-2">
                         <span className="w-1.5 h-3.5 bg-purple-500 rounded-full" />
-                        <h5 className="text-xs font-bold text-slate-800">5 種指定精神疾病</h5>
+                        <h5 className="text-xs font-bold text-slate-800">5 種指定精神／大腦疾病</h5>
                       </div>
                       <div className="grid grid-cols-1 gap-y-1.5 text-[11px] text-slate-600">
                         <span className="font-medium">• 嚴重認知障礙 (Dementia)</span>
@@ -1522,11 +1522,10 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-100 text-[11px] text-amber-950 flex gap-2 items-start">
+                  <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-100 text-[11px] text-amber-955 flex gap-2 items-start">
                     <Brain className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong>老退化/帕金森專屬「與您相伴保障」：</strong> 
-                      若於80歲前不幸確診嚴重認知障礙或柏金遜病，計劃特別照顧日常護理負擔，<strong>最長連續10個年度支付額外年度賠償</strong>，每年賠償金額高達整付保費的 3.5%（盛享年金）！這筆額外補助能夠全力填補安老院及專科醫藥費用。
+                    <div> 
+                      若受保人於 80 歲前不幸確診嚴重認知障礙或柏金遜病，計劃特別分擔長期護理開支，<strong>最長連續 10 個保單年度支付額外年度賠償</strong>，每年賠償額最高可達已繳整付保費的 3.5%（高增值方案）！本項客觀優勢有助填補非醫療性的安老、陪伴及居家看護開支。
                     </div>
                   </div>
                 </div>
@@ -1534,27 +1533,27 @@ export default function App() {
                 {/* Succession & Safe custody */}
                 <div className="lg:col-span-5 flex flex-col gap-6">
                   
-                  {/* Card: 安枕無憂服務 */}
+                  {/* Card: 遠瞻失能代管 */}
                   <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 space-y-3.5 flex-1 flex flex-col justify-between">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <div className="p-2 bg-indigo-50 rounded-lg text-indigo-600 border border-indigo-100 font-bold text-xs">
                           <Lock className="h-4.5 w-4.5" />
                         </div>
-                        <h4 className="font-bold text-slate-900 text-sm">獨有「安枕無憂服務」 ── 遠瞻失能代管</h4>
+                        <h4 className="font-bold text-slate-900 text-sm">獨有「代管安全機制」 ── 遠瞻失能防護</h4>
                       </div>
                       <p className="text-xs text-slate-600 leading-relaxed font-light">
-                        即使未來有不可抗變數，仍能確保理財按您意願運行。您可以提前指定一位受信任的家人：
+                        即使未來有健康不可抗變數，仍能確保退休金按原意運作。您可以提前指定一位受信任的家人：
                       </p>
                       
                       <div className="space-y-2.5 pt-1.5">
                         <div className="p-3 bg-indigo-50/40 rounded-xl border border-indigo-100/40 text-[11px] space-y-1">
-                          <strong className="text-indigo-900 block font-bold text-xs">選項 1：轉移保單擁有權</strong>
-                          <span className="text-slate-600 text-left block">當您不幸失能或嚴重精神無行為能力時，保單自動將所有權無縫轉給您的子女，讓他們直接每月代領您的年金入息，守護您的體面晚年。</span>
+                          <strong className="text-indigo-900 block font-bold text-xs">機制 1：轉移保單權益</strong>
+                          <span className="text-slate-600 text-left block">當您被診斷為失能或嚴重精神無行為能力時，保單自動授權您的指定受益子女代領每月保證年金入息，守護您的尊嚴晚年。</span>
                         </div>
                         <div className="p-3 bg-indigo-50/40 rounded-xl border border-indigo-100/40 text-[11px] space-y-1">
-                          <strong className="text-indigo-900 block font-bold text-xs">選項 2：指定人一次性應急提取</strong>
-                          <span className="text-slate-600 text-left block">預先授權指定家人一次性提取部分保單價值（特定百分比）用作急症，而保單所有人依然是您，剩下的 guaranteed 每期年金繼續自動運轉。</span>
+                          <strong className="text-indigo-900 block font-bold text-xs">機制 2：代管人應急解鎖提取</strong>
+                          <span className="text-slate-600 text-left block">預先授權指定家人一次性提取部分保單價值用作合規之急症醫療，而保單主約自動化運轉，保證剩下的年金不受影響，繼續月月支付。</span>
                         </div>
                       </div>
                     </div>
@@ -1566,11 +1565,11 @@ export default function App() {
                       <div className="p-2 bg-amber-500/10 rounded-lg text-amber-400">
                         <Award className="h-4.5 w-4.5" />
                       </div>
-                      <h4 className="font-bold text-white text-sm">財富世代傳承 · 身故賠償分期派發</h4>
+                      <h4 className="font-bold text-white text-sm">資產世代傳承 · 身故分期給付</h4>
                     </div>
                     
                     <p className="text-xs text-slate-300 leading-relaxed font-light">
-                      投保後，您可以提名保單承繼人（Nominee）。當您離世，年金合同可靈活轉入子女名下承繼，更可靈活客製身故賠償分配方式（一筆過 或 年度/月度分期派發），防止子女因一次性繼承巨款而被外人誘騙或不慎揮霍，完成真正的富足傳遞！
+                      投保後，您可以提名保單承繼人（Nominee）。當您離世，年金合同可靈活過渡予子女名下接續領取。更能自由設定身故賠償發放制度（一次性領取，或按年/按月分期派發），避免受益子女因一時繼承巨資而被外人誘騙或不慎揮霍，延續財富的長久庇護。
                     </p>
                   </div>
 
@@ -1585,23 +1584,23 @@ export default function App() {
                 </div>
                 
                 <h3 className="font-sans font-extrabold text-slate-900 text-xl sm:text-2xl tracking-tight">
-                  心動不如行動 ── 為晚年生活加上百分之百的終身承諾
+                  理性規劃 · 鎖定伴您一生的穩健承諾
                 </h3>
                 
                 <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed font-light">
-                  通貨膨脹率高居不下，把現金存在普通戶口只會年年貶值；股票市場風雨飄搖，買物業收租還要面對高昂稅率與空置糾紛！
-                  <strong>「宏利宏瑞終身即期年金」</strong>免申報煩惱，一經投保最快下月即開出終身糧倉！享受頂級保險公司的實力和信譽保障。
+                  通脹壓力長期存在，傳統定存收益有限；而市況波動使個人投資風險增加。
+                  透過<strong>「終身即期年金方案」</strong>，可免除複雜的供款與申報，助您在退休初期便鎖定穩健的終身月薪現金流，由實力雄厚的知名保險機構為您的晚年保底。
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 items-center justify-center pt-2 max-w-xl mx-auto">
                   <a
-                    href={`https://wa.me/85262557627?text=你好！我正在使用你的「錢家保險智囊」年金諮詢頁面。我對【宏利宏瑞終身即期年金保險計劃】的一對一客製收益配置（25年收益高達263%）及首投優惠有極大興趣。我的設定預算為美金 $${productPremium.toLocaleString()}元，並想諮詢限時豁免/首期費回贈，能否請您盡快與我聯絡？謝謝！`}
+                    href={`https://wa.me/85262557627?text=你好！我正在使用你的「錢家保險智囊」年金試算服務。我對這種「即期終身年金（25年總預期收益高達263% + 重疾提取權益）」的一對一客製對標規劃很感興趣。我的設定預算為美金 $${productPremium.toLocaleString()}元，並想諮詢市場同級產品對比分析，能否請您與我聯絡？謝謝！`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-all duration-200 shadow-md shadow-emerald-500/10 border border-emerald-500"
                   >
                     <Phone className="h-4 w-4 text-emerald-100" />
-                    <span>WhatsApp 顧問即刻落實保單 ($${productPremium.toLocaleString()} USD)</span>
+                    <span>WhatsApp 顧問即刻規劃年金對標書 ($${productPremium.toLocaleString()} USD)</span>
                   </a>
                   <button
                     onClick={() => {
@@ -1616,58 +1615,58 @@ export default function App() {
                 </div>
 
                 <div className="text-[10px] text-slate-400 font-light flex justify-center items-center gap-2 flex-wrap">
-                  <span>✨ 簡便核保（免驗身）</span>
+                  <span>✨ 簡便健康申報（無需驗身）</span>
                   <span>•</span>
-                  <span>🛡️ 21天法規冷靜期保障</span>
+                  <span>🛡️ 21天香港法定冷靜退保期保障</span>
                   <span>•</span>
-                  <span>📈 多重紅利分派系統</span>
+                  <span>📈 雙重紅利與收益增值配置</span>
                 </div>
               </div>
 
               {/* Mini Product Terms Table to show professional coverage Details */}
               <div className="overflow-hidden bg-white rounded-2xl border border-slate-200">
                 <div className="border-b border-slate-200 bg-slate-50 px-5 py-4 flex items-center justify-between flex-wrap gap-2">
-                  <h4 className="font-bold text-slate-800 text-xs sm:text-sm">宏瑞終身即期年金保險計劃 ── 投保與保障核心規格一覽</h4>
-                  <span className="text-[10px] font-mono text-slate-400">PDF官方產品小冊自查存檔</span>
+                  <h4 className="font-bold text-slate-800 text-xs sm:text-sm">終身即期年金精選對標方案 ── 投保與保障核心規格一覽</h4>
+                  <span className="text-[10px] font-mono text-slate-400">客觀教育規格數據存檔</span>
                 </div>
                 <div className="overflow-x-auto text-xs text-slate-600">
                   <table className="w-full border-collapse text-left">
                     <thead>
                       <tr className="bg-slate-50 border-b border-slate-200 font-bold">
-                        <th className="p-3 pl-5 text-slate-700">保障條款規格</th>
-                        <th className="p-3 text-slate-700">「盛享」計劃 (Prosperity)</th>
-                        <th className="p-3 text-slate-700">「易選」計劃 (Easy)</th>
+                        <th className="p-3 pl-5 text-slate-700">保障條款規格指標</th>
+                        <th className="p-3 text-slate-700">「高增值型」精選方案 (Prosperity)</th>
+                        <th className="p-3 text-slate-700">「高入息型」精選方案 (Easy)</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
                       <tr>
-                        <td className="p-3 pl-5 font-medium text-slate-800">投保年齡組合</td>
+                        <td className="p-3 pl-5 font-medium text-slate-800">投保年齡組合範圍</td>
                         <td className="p-3" colSpan={2}>40 歲至 85 歲（年齡最接近之生日計算）</td>
                       </tr>
                       <tr>
                         <td className="p-3 pl-5 font-medium text-slate-800">保費繳付方式</td>
-                        <td className="p-3" colSpan={2}>整付保費 (Single Premium ── 一次性清繳，免續期供款壓力)</td>
+                        <td className="p-3" colSpan={2}>整付保費 (Single Premium ── 一次性清繳，免續期保費壓力)</td>
                       </tr>
                       <tr>
-                        <td className="p-3 pl-5 font-medium text-slate-800">保費限額限制</td>
-                        <td className="p-3" colSpan={2}>最低：30,000 美元 ｜ 最高：高達 3,000,000 美元（極限資產池）</td>
+                        <td className="p-3 pl-5 font-medium text-slate-800">首投門檻與限制</td>
+                        <td className="p-3" colSpan={2}>最低：30,000 美元 起 ｜ 最高限制：高達 3,000,000 美元（無上限限制健康申報）</td>
                       </tr>
                       <tr>
                         <td className="p-3 pl-5 font-medium text-slate-800">開始月入息發放</td>
-                        <td className="p-3" colSpan={2}>由第 1 個保單月結日起，終身月月保證不變</td>
+                        <td className="p-3" colSpan={2}>由第 1 個保單月結日起，終身每月派發保證年金入息</td>
                       </tr>
                       <tr>
-                        <td className="p-3 pl-5 font-medium text-slate-800">身心全護保障疾病</td>
-                        <td className="p-3" colSpan={2}>覆蓋共 14 種致命危疾與重病精神分裂/嚴重失智（鎖定並免息預支高達50%終期紅利，最多5次）</td>
+                        <td className="p-3 pl-5 font-medium text-slate-800">身心全護保障危疾</td>
+                        <td className="p-3" colSpan={2}>涵蓋共 14 種致命重疾及嚴重精神/認知障礙（提前鎖定提取高達50%終期紅利，最高可行使5次）</td>
                       </tr>
                       <tr>
-                        <td className="p-3 pl-5 font-medium text-slate-800">與您相伴保障比例</td>
-                        <td className="p-3 text-emerald-700 font-bold bg-emerald-50/20">每年額外賠償整付保費之 3.5% (領足10年，最多35%)</td>
-                        <td className="p-3 text-emerald-700 font-medium">每年額外賠償整付保費之 0.5% (領足10年，最多5%)</td>
+                        <td className="p-3 pl-5 font-medium text-slate-800">失能照護額外給付比例</td>
+                        <td className="p-3 text-emerald-700 font-bold bg-emerald-50/20">每年額外賠償整付保費之 3.5% (領足10年，累計達 35%)</td>
+                        <td className="p-3 text-emerald-700 font-medium">每年額外賠償整付保費之 0.5% (領足10年，累計達 5%)</td>
                       </tr>
                       <tr>
-                        <td className="p-3 pl-5 font-medium text-slate-800">意外身故額外賠償</td>
-                        <td className="p-3" colSpan={2}>首 5 個保單年度內，因意外遭遇不幸身故，額外豁免賠償 100% 已繳整付保費面額</td>
+                        <td className="p-3 pl-5 font-medium text-slate-800">身故意外保費退還</td>
+                        <td className="p-3" colSpan={2}>首 5 個保單年度內因意外身故，保險公司另額外給付 100% 已繳整付保費作為身故撫恤</td>
                       </tr>
                     </tbody>
                   </table>
