@@ -1,0 +1,6 @@
+{
+  "name": "SCMP AI Pulse",
+  "description": "An AI-powered, single-screen reader and summarizer for the South China Morning Post (SCMP) feed, featuring instant key-takeaways, regional analysis, and conversational Q&A on global events.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
