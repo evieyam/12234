@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import Parser from "rss-parser";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 
@@ -11,17 +10,6 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-
-// Initialize parser
-const parser = new Parser({
-  customFields: {
-    item: [
-      ["media:content", "mediaContent", { keepArray: true }],
-      ["media:thumbnail", "mediaThumbnail"],
-      ["dc:creator", "creator"],
-    ],
-  },
-});
 
 // Lazy-initialized Gemini Client helper
 let aiClient: GoogleGenAI | null = null;
@@ -48,118 +36,63 @@ function getGeminiClient(): GoogleGenAI {
 // ----------------------------------------------------
 
 /**
- * Fetch and parse standard SCMP RSS Feed
+ * Handle AI-guided financial gap and insurance analysis
  */
-app.get("/api/feed", async (req, res) => {
-  try {
-    const feedUrl = "https://www.scmp.com/rss/2/feed/";
-    const feed = await parser.parseURL(feedUrl);
+app.post("/api/analyze-gap", async (req, res) => {
+  const { calculatorInput, activeCategory } = req.body;
 
-    const items = feed.items.map((item: any) => {
-      // Robust Image extraction
-      let imageUrl = "";
-
-      // 1. Check mediaContent array (rss-parser custom field)
-      if (item.mediaContent && item.mediaContent.length > 0) {
-        imageUrl = item.mediaContent[0]?.$?.url || "";
-      }
-
-      // 2. Check mediaThumbnail
-      if (!imageUrl && item.mediaThumbnail) {
-        imageUrl = item.mediaThumbnail?.$?.url || "";
-      }
-
-      // 3. Check standard enclosure
-      if (!imageUrl && item.enclosure && item.enclosure.url) {
-        imageUrl = item.enclosure.url;
-      }
-
-      // 4. Fallback search inside description HTML for <img> source
-      const descHtml = item.description || item.content || "";
-      if (!imageUrl && descHtml) {
-        const imgElMatch = descHtml.match(/<img[^>]+src=["']([^"']+)["']/i);
-        if (imgElMatch && imgElMatch[1]) {
-          imageUrl = imgElMatch[1];
-        }
-      }
-
-      // Clean HTML tags from description for card snippet representation
-      let cleanDescription = descHtml
-        .replace(/<[^>]*>/g, "") // Strip HTML tags
-        .replace(/&nbsp;/g, " ")
-        .replace(/&amp;/g, "&")
-        .replace(/&quot;/g, '"')
-        .replace(/&apos;/g, "'")
-        .trim();
-
-      // If it's too long, truncate clean summary
-      if (cleanDescription.length > 280) {
-        cleanDescription = cleanDescription.slice(0, 277) + "...";
-      }
-
-      return {
-        id: item.guid || item.link || Math.random().toString(),
-        title: item.title?.replace(/&quot;/g, '"')?.replace(/&amp;/g, '&') || "Untitled Article",
-        link: item.link || "",
-        pubDate: item.pubDate || item.isoDate || new Date().toISOString(),
-        author: item.creator || item.author || "SCMP Reporter",
-        description: cleanDescription,
-        rawDescription: descHtml,
-        imageUrl: imageUrl,
-        categories: item.categories || [],
-      };
-    });
-
-    res.json({
-      title: feed.title || "South China Morning Post",
-      link: feed.link || "https://www.scmp.com",
-      description: feed.description || "World News Feed",
-      items: items,
-    });
-  } catch (error: any) {
-    console.error("Error parsing RSS feed:", error);
-    res.status(500).json({
-      error: "Failed to load RSS feed. Make sure the server can reach SCMP.",
-      details: error.message,
-    });
-  }
-});
-
-/**
- * Generate AI Summary & Actionable Insights for a specific article
- */
-app.post("/api/summary", async (req, res) => {
-  const { title, description, link } = req.body;
-
-  if (!title) {
-    return res.status(400).json({ error: "Article title is required" });
+  if (!calculatorInput) {
+    return res.status(400).json({ error: "Calculator input data is required" });
   }
 
   try {
     const ai = getGeminiClient();
 
     const prompt = `
-You are an expert editorial analyst specializing in Asian development and geopolitics.
-Analyze this article from the South China Morning Post (SCMP):
+您是香港投資者及理財教育委員會（IFEC / 錢家有道）的資深保險及理財規劃專家。
+請根據以下使用者的基本財務與保障狀況，進行深度的保障缺口評估及保險規劃分析。分析必須高度客觀、實用、符合香港保險市場守則，並以繁體中文撰寫。
 
-Title: ${title}
-Snippet/Description: ${description}
-Article Link: ${link}
+使用者財務狀況：
+- 年齡: ${calculatorInput.age} 歲
+- 每月收入: HK$${calculatorInput.monthlyIncome}
+- 受養人人數: ${calculatorInput.dependents} 人
+- 每月開支（包括家庭生活費、供樓、養育子女等）: HK$${calculatorInput.monthlyExpenses}
+- 按揭或其他債務總額: HK$${calculatorInput.mortgageDebt}
+- 現有壽險保額: HK$${calculatorInput.currentLifeCoverage}
+- 現有醫療保障程度: ${calculatorInput.currentMedicalCoverage === "None" ? "無任何醫療保險" : calculatorInput.currentMedicalCoverage === "Basic" ? "僅有基本僱主團體醫療險" : "已自行投保自願醫保 (VHIS) 或中高端醫療險"}
+- 是否有危疾保障: ${calculatorInput.hasCriticalIllness ? "是" : "否"}
 
-Formulate a beautifully structured analysis in strict JSON format. Ensure all strings are correctly closed and formatted for parsing.
-The response object must match this schema exactly:
+當前關注的保險項目或瀏覽中的項目: ${activeCategory || "未指定"}
+
+請進行以下規劃計算：
+1. 壽險需求估算公式（參考錢家有道推薦方式，例如：受養人保障金額 = 每月家庭開支 × 12個月 × 需要扶養的年期 + 債務總額 - 現有保額）。
+2. 評估醫療保險是否充足（是否需要自願醫保 VHIS、補足免賠額等）。
+3. 評估危疾保險是否有缺口（一般建議為年收入的 2 至 3 倍以防範患病期間的收入損失）。
+
+請 formulate 一個精確的評估報告，並嚴格按照以下 JSON 結構回傳。
+回傳的內容必須為標準的 JSON 格式（不要在回傳字串前後包裹 \`\`\`json 等 Markdown 包裹符號，只回傳純 JSON 字串）：
+
 {
-  "summary": "A 3-sentence, high-level narrative summary of what is happening and why.",
-  "takeaways": [
-    "High-impact key insight bullet 1",
-    "High-impact key insight bullet 2",
-    "High-impact key insight bullet 3"
+  "evaluation": "一段約 150-200 字的整體财务與保障狀況專業評估。指出當前最重要的保障盲點（例如：扶養責任重但壽險不足、或危疾保障空白）。",
+  "gapsRisk": [
+    "保障缺口風險 1（例如：若不幸遇上意外，現有的 HK$XX 壽險難以覆蓋 HK$XX 按揭負擔，會讓家人承受債務壓力。）",
+    "保障缺口風險 2（例如：全賴公司醫保，一旦離職或退休將失去保障，且基本團體醫保通常不設保證續保。）",
+    "保障缺口風險 3"
   ],
-  "regionalContext": "A brief paragraph detailing the historical regional background, implications for East Asia (China, Hong Kong, surrounding states), or implications for global relations (e.g., US-China geopolitics). Give objective editorial depth as expected of top analysts.",
-  "entities": ["Mentioned entity 1", "Mentioned entity 2", "Mentioned entity 3"]
+  "productSuggestions": [
+    {
+      "type": "保險種類（例如：人壽保險、自願醫保 (VHIS)、危疾保險、家居保險、旅遊保險）",
+      "reason": "具體的建議原因，並指出建議的保額估算或保障要點（例如：建議增購定期壽險，保額約 HK$XXXX,XXX，以覆蓋按揭及未來10年家庭開支）。",
+      "priority": "HIGH" (可選值為 "HIGH", "MEDIUM", "LOW")
+    },
+    {
+      "type": "保險種類",
+      "reason": "建議原因與保額配置要點。",
+      "priority": "MEDIUM"
+    }
+  ],
+  "educationalTakeaway": "一句精華金句，總結錢家有道的保險精明錦囊（例如：買保險應『先保障，後投資』，先配齊基本醫療與人壽，再考慮其他儲蓄型保險。避免因小失大。）"
 }
-
-Return ONLY standard raw JSON. Do not include markdown codeblocks or quotes around the response. Only the pure JSON string.
 `;
 
     const response = await ai.models.generateContent({
@@ -173,148 +106,92 @@ Return ONLY standard raw JSON. Do not include markdown codeblocks or quotes arou
     const parsedData = JSON.parse(response.text?.trim() || "{}");
     res.json(parsedData);
   } catch (error: any) {
-    console.error("Gemini summary error:", error);
+    console.error("Gemini analysis error:", error);
     if (error.message && error.message.includes("GEMINI_API_KEY")) {
       return res.status(401).json({
         error: "Missing API Key",
-        details: "Please configure your GEMINI_API_KEY secret in the AI Studio environment settings.",
+        details: "未配置 GEMINI_API_KEY。請於 Settings > Secrets 設定 key 以啟用智慧保險缺口評估功能。",
       });
     }
     res.status(500).json({
-      error: "Failed to generate AI insights.",
+      error: "無法生成智能評估報告。",
       details: error.message,
     });
   }
 });
 
 /**
- * Generate the Daily AI Context Brief (aggregated overview of top stories)
- */
-app.post("/api/briefing", async (req, res) => {
-  const { articles } = req.body;
-
-  if (!articles || !Array.isArray(articles) || articles.length === 0) {
-    return res.status(400).json({ error: "List of articles is required for briefing" });
-  }
-
-  try {
-    const ai = getGeminiClient();
-
-    const articlesText = articles
-      .slice(0, 6)
-      .map((a, i) => `${i + 1}. [${a.author || "SCMP"}] ${a.title}\nSnippet: ${a.description}`)
-      .join("\n\n");
-
-    const prompt = `
-You are a senior geopolitical desk editor.
-Synthesize these latest news flashes/articles from the South China Morning Post into an elegant, high-altitude briefing block.
-
-Top Stories Context:
-${articlesText}
-
-Write a newsletter briefing in strict JSON format matching this schema:
-{
-  "headline": "A catchy, unified macro headline describing today's narrative pulse.",
-  "narrativeBrief": "A beautifully written, cohesive daily editorial summary paragraph (4-5 sentences) that connects these stories, highlighting central economic, societal, or diplomatic themes.",
-  "macroInsights": [
-    "Macro theme/implication 1",
-    "Macro theme/implication 2",
-    "Macro theme/implication 3"
-  ],
-  "outlook": "A short sentence outlining what observers/investors should watch closely in the coming days."
-}
-
-Return ONLY standard raw JSON. No markdown backticks, code blocks, or preamble. Just valid JSON.
-`;
-
-    const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-      },
-    });
-
-    const parsedData = JSON.parse(response.text?.trim() || "{}");
-    res.json(parsedData);
-  } catch (error: any) {
-    console.error("Gemini briefing error:", error);
-    if (error.message && error.message.includes("GEMINI_API_KEY")) {
-      return res.status(401).json({
-        error: "Missing API Key",
-        details: "Please configure your GEMINI_API_KEY secret in the AI Studio environment settings.",
-      });
-    }
-    res.status(500).json({
-      error: "Failed to generate AI briefing.",
-      details: error.message,
-    });
-  }
-});
-
-/**
- * Chat with Gemini about the selected article
+ * Chat with insurance expert to answer user queries based on IFEC insurance guides
  */
 app.post("/api/chat", async (req, res) => {
-  const { messages, article } = req.body;
+  const { messages, calculatorInput, insuranceType } = req.body;
 
   if (!messages || !Array.isArray(messages)) {
-    return res.status(400).json({ error: "Messages array is required" });
+    return res.status(400).json({ error: "Messages list is required" });
   }
 
   try {
     const ai = getGeminiClient();
 
-    // Prepare system instruction injection containing details about the target article
-    const articleContext = article
-      ? `You are discussing this specific article from the South China Morning Post (SCMP):
-         Title: "${article.title}"
-         Byline: "${article.author}"
-         Published: "${article.pubDate}"
-         Snippet: "${article.description}"
-         URL: "${article.link}"
-         
-         Provide rich contextual explanations, historical milestones, and balanced geopolitical insights. Stick strictly to facts surrounding East Asia, Hong Kong affairs, and Global affairs related to the article.`
-      : "You are an expert desk analyzer on East Asian affairs and general global news for the South China Morning Post (SCMP).";
+    // Context details from IFEC Guideline
+    const context = `
+您是香港投資者及理財教育委員會（IFEC / 錢家有道）的保險教育專家諮詢助手。
+您的任務是以客觀、中立、非銷售推廣、純理財教育的角度解答香港市民關於保險的疑問：
 
-    // Format chat history for @google/genai SDK
-    // @google/genai chats.create handles conversational flow
+【錢家有道保險教育核心守則】：
+1. 絕不推銷任何具體的保險公司、品牌或產品項目。
+2. 強調「先保障，後儲蓄」的健康理財觀念。
+3. 指導市民如何合理評估保障額度，留意不保事項（Exclusions）、等候期、免賠額（Deductibles）等關鍵字。
+4. 解釋自願醫保計劃（VHIS）的優點（如：扣稅、保證續保、覆蓋未已知既往症）。
+5. 保持語氣親切、專業、客觀中立、實用。
+
+當前使用者關注的保險項目：${insuranceType ? `${insuranceType.name} (${insuranceType.engName})` : "整體保險規劃"}
+${calculatorInput ? `使用者當前計算機財務背景：
+- 年齡: ${calculatorInput.age}
+- 半年/月收入: HK$${calculatorInput.monthlyIncome}
+- 受養親屬: ${calculatorInput.dependents} 人
+- 每月開支: HK$${calculatorInput.monthlyExpenses}
+- 現有債務: HK$${calculatorInput.mortgageDebt}` : ""}
+
+請針對使用者的提問，給予權威而淺顯易懂的繁體中文解答。
+`;
+
+    const chatHistory = messages.map((m: any) => ({
+      role: m.role,
+      contents: m.content
+    }));
+
+    // Find the latest user message
+    const lastUserMessage = messages[messages.length - 1]?.content || "";
+
     const chat = ai.chats.create({
       model: "gemini-3.5-flash",
       config: {
-        systemInstruction: articleContext,
+        systemInstruction: context,
       },
     });
 
-    // Send previous messages to build up context
-    // The last message is the current user prompt
-    const lastUserMessage = messages[messages.length - 1]?.content || "";
-    
-    // We can fetch response by sending user message
-    // If there is preceding history, we can simulate or pass it.
-    // For single turn chat inside of SCMP context, we can just feed a compiled prompt or utilize chat.sendMessage.
     const response = await chat.sendMessage({
       message: lastUserMessage,
     });
 
     res.json({
-      content: response.text || "I was unable to formulate a response.",
+      content: response.text || "非常抱歉，我目前無法為您解答。請稍後再試。",
     });
   } catch (error: any) {
     console.error("Gemini chat error:", error);
     if (error.message && error.message.includes("GEMINI_API_KEY")) {
       return res.status(401).json({
         error: "Missing API Key",
-        details: "Please configure your GEMINI_API_KEY secret in the AI Studio environment settings to chat.",
+        details: "未配置 GEMINI_API_KEY。請於 Settings > Secrets 設定 key 以啟用智慧諮詢平台。",
       });
     }
     res.status(500).json({
-      error: "AI dialogue failed.",
+      error: "專家對話連線失敗。",
       details: error.message,
     });
   }
 });
-
 
 // ----------------------------------------------------
 // VITE OR STATIC STATIC MIDDLEWARE

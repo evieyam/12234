@@ -1,6 +1,6 @@
 {
-  "name": "SCMP AI Pulse",
-  "description": "An AI-powered, single-screen reader and summarizer for the South China Morning Post (SCMP) feed, featuring instant key-takeaways, regional analysis, and conversational Q&A on global events.",
+  "name": "錢家保險通 - IFEC 智能保險教育與規劃器",
+  "description": "參考香港投資者及理財教育委員會（錢家有道）保險指南設計的智能教育與規劃工具。提供五大核心保險種類解析、保險缺口交互計算機以及 AI 專家諮詢，助您明智選擇合適的保險保障。",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
